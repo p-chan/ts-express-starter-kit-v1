@@ -1,0 +1,19 @@
+{
+  "name": "ts-express-starter-kit",
+  "version": "1.0.0",
+  "description": "A starter kit",
+  "license": "MIT",
+  "author": "P-Chan",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "format": "prettier --write \"./src/**/*.ts\""
+  },
+  "dependencies": {
+    "express": "^4.17.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.16.1",
+    "typescript": "^3.4.5"
+  }
+}
