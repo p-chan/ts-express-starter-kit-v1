@@ -1,10 +1,13 @@
 import Router from 'express-promise-router'
+import endpoints from './endpoints'
 
 const router = Router()
 
 router.get('/', (req, res) => {
   res.send('hello world')
 })
+
+router.get('/status', endpoints.status.index)
 
 router.get('/error', (req, res, next) => {
   const err: any = new Error()
