@@ -16,7 +16,7 @@ export class Application extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: number
 
-  @Column({ name: 'name', length: 64 })
+  @Column({ name: 'name', length: 48 })
   name!: string
 
   @Index({ unique: true })

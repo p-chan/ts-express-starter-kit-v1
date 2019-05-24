@@ -12,8 +12,8 @@ import {
 import { User } from './User'
 import { Application } from './Application'
 
-@Entity('tokens')
-export class Tokens extends BaseEntity {
+@Entity('refresh_tokens')
+export class RefreshTokens extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: number
 
