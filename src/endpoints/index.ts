@@ -1,5 +1,7 @@
-import status from './status/index'
+import status from './status'
+import users from './users'
 
 export default {
-  status: status
+  status: status,
+  users: users
 }
