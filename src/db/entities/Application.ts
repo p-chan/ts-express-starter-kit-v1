@@ -7,8 +7,14 @@ import {
   Column,
   ManyToOne,
   JoinColumn,
-  Index
+  Index,
+  BeforeInsert
 } from 'typeorm'
+
+import { Length } from 'class-validator'
+
+import { randomBytes } from 'crypto'
+
 import { User } from './User'
 
 @Entity('applications')
@@ -17,6 +23,7 @@ export class Application extends BaseEntity {
   id!: number
 
   @Column({ name: 'name', length: 48 })
+  @Length(1, 48)
   name!: string
 
   @Index({ unique: true })
@@ -35,4 +42,13 @@ export class Application extends BaseEntity {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt!: Date
+
+  @BeforeInsert()
+  async beforeInsert() {
+    const clientId = await randomBytes(32).toString('hex')
+    const clientSecret = await randomBytes(32).toString('hex')
+
+    this.clientId = clientId
+    this.clientSecret = clientSecret
+  }
 }
