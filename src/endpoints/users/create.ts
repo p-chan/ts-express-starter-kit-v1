@@ -8,21 +8,29 @@ export default async (
   res: express.Response,
   next: express.NextFunction
 ) => {
-  const user = new User()
+  let user = new User()
   user.email = req.body.email
   user.name = req.body.name
   user.screenName = req.body.screen_name
-  user.hashedPassword = req.body.password
+  user.password = req.body.password
 
-  await validate(user).then(async errors => {
-    if (errors.length) {
-      const e: any = new Error('bad request')
-      e.statusCode = 400
-      next(e)
+  const errors = await validate(user)
+
+  if (errors.length) {
+    console.error(errors)
+
+    const firstError = errors[0].constraints
+
+    for (const error in firstError) {
+      if (firstError.hasOwnProperty(error)) {
+        const e: any = new Error(firstError[error])
+        e.statusCode = 400
+        throw e
+      }
     }
-  })
+  }
 
-  await getRepository(User).save(user)
+  user = await getRepository(User).save(user)
 
   await res.status(201).json({
     id: user.id,

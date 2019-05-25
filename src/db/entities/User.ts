@@ -9,7 +9,7 @@ import {
   BeforeInsert
 } from 'typeorm'
 
-import { Length, IsEmail } from 'class-validator'
+import { Length, IsEmail, MaxLength, MinLength } from 'class-validator'
 
 import bcrypt from 'bcrypt'
 
@@ -32,9 +32,10 @@ export class User extends BaseEntity {
   @Column({ name: 'screen_name', length: 24 })
   screenName!: string
 
-  @Length(8, 72)
-  @Column({ name: 'hashed_password', length: 60 })
-  hashedPassword!: string
+  @MinLength(8)
+  @MaxLength(72)
+  @Column({ name: 'password', length: 60 })
+  password!: string
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt!: Date
@@ -43,7 +44,7 @@ export class User extends BaseEntity {
   updatedAt!: Date
 
   async hashPassword() {
-    this.hashedPassword = await bcrypt.hash(this.hashedPassword, 10)
+    this.password = await bcrypt.hash(this.password, 10)
   }
 
   @BeforeInsert()

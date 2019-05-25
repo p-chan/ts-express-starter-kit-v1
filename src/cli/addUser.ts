@@ -9,9 +9,7 @@ createConnection()
     user.name = await cli.prompt('What is your name?')
     user.screenName = await cli.prompt('What is your screen name')
     user.email = await cli.prompt('What is your email')
-    await user.hashPassword(
-      await cli.prompt('What is your password?', { type: 'hide' })
-    )
+    user.password = await cli.prompt('What is your password?', { type: 'hide' })
 
     await cli.confirm('Continue?')
 
