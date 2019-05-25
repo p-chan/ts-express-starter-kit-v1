@@ -11,7 +11,8 @@
     "build": "tsc",
     "format": "prettier --write \"./src/**/*.ts\"",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
-    "seed:user": "ts-node ./src/cli/addUser.ts"
+    "seed:user": "ts-node ./src/cli/addUser.ts",
+    "seed:application": "ts-node ./src/cli/addApplication.ts"
   },
   "dependencies": {
     "@oclif/config": "^1.13.0",
