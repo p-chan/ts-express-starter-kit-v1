@@ -5,7 +5,8 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  Index
+  Index,
+  BeforeInsert
 } from 'typeorm'
 
 import { Length, IsEmail } from 'class-validator'
@@ -31,8 +32,8 @@ export class User extends BaseEntity {
   @Column({ name: 'screen_name', length: 24 })
   screenName!: string
 
+  @Length(8, 72)
   @Column({ name: 'hashed_password', length: 60 })
-  @Length(1, 60)
   hashedPassword!: string
 
   @CreateDateColumn({ name: 'created_at' })
@@ -41,8 +42,12 @@ export class User extends BaseEntity {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt!: Date
 
-  async hashPassword(password: string) {
-    const hashedPassword = await bcrypt.hash(password, 10)
-    this.hashedPassword = hashedPassword
+  async hashPassword() {
+    this.hashedPassword = await bcrypt.hash(this.hashedPassword, 10)
+  }
+
+  @BeforeInsert()
+  async beforeInsert() {
+    await this.hashPassword()
   }
 }

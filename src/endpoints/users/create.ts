@@ -12,7 +12,7 @@ export default async (
   user.email = req.body.email
   user.name = req.body.name
   user.screenName = req.body.screen_name
-  await user.hashPassword(req.body.password)
+  user.hashedPassword = req.body.password
 
   await validate(user).then(async errors => {
     if (errors.length) {
