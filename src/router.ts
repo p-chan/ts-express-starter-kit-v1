@@ -9,6 +9,7 @@ router.get('/', (req, res) => {
 
 router.get('/status', endpoints.status.index)
 router.post('/users', endpoints.users.create)
+router.post('/oauth2/token', endpoints.oauth2.token)
 
 router.get('/error', (req, res, next) => {
   const err: any = new Error()

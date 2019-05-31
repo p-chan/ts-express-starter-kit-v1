@@ -6,14 +6,22 @@ const errorHandler = (
   res: express.Response,
   next: express.NextFunction
 ) => {
-  const statusCode = err.statusCode || 500
+  if (err.isBoom) {
+    const statusCode = err.output.statusCode
+    const payload = err.output.payload
 
-  res.status(statusCode).json({
-    error: {
-      statusCode: statusCode,
-      message: err.message
-    }
-  })
+    res.status(statusCode).json(payload)
+  } else {
+    const statusCode = err.statusCode || 500
+
+    res.status(statusCode).json({
+      error: {
+        statusCode: statusCode,
+        error: '',
+        message: err.message
+      }
+    })
+  }
 }
 
 export default errorHandler

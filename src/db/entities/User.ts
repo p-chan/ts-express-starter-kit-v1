@@ -47,6 +47,10 @@ export class User extends BaseEntity {
     this.password = await bcrypt.hash(this.password, 10)
   }
 
+  static async comperePassword(plainPassword: string, hashedPassword: string) {
+    return await bcrypt.compare(plainPassword, hashedPassword)
+  }
+
   @BeforeInsert()
   async beforeInsert() {
     await this.hashPassword()
